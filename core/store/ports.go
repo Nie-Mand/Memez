@@ -13,17 +13,17 @@ type APIServer interface {
 // MemesService
 type MemesService interface {
 
-	UploadAndRate(m *Meme) error
+	UploadAndRate(ctx echo.Context, m *Meme) error
 }
 
 // MemesRepository
 type MemesRepository interface {
 
-	Save(m *Meme) error
+	Save(ctx echo.Context, m *Meme) error
 }
 
 // MemesRatingService
 type MemesRatingService interface {
 
-	Rate(m *Meme) error
+	Rate(ctx echo.Context, m *Meme) error
 }

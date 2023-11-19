@@ -1,6 +1,7 @@
 package services
 
 import (
+	"insat/devops/core/config"
 	"insat/devops/core/store"
 	"net/http"
 
@@ -23,6 +24,7 @@ func (MemesHandler) ShowIndex(c echo.Context) error {
 
 func (h *MemesHandler) UploadAndRate(c echo.Context) error {
 	content := c.FormValue("meme")
+
 	if content == "" {
 		return c.Render(http.StatusOK, "index.html", nil)
 	}
@@ -33,7 +35,9 @@ func (h *MemesHandler) UploadAndRate(c echo.Context) error {
 		Rate:    "",
 	}
 
-	err := h.MemesService.UploadAndRate(&meme)
+	config.RemoteLog("Uploading and rating the meme...")
+
+	err := h.MemesService.UploadAndRate(c, &meme)
 	if err != nil {
 		return c.Render(http.StatusOK, "index.html", nil)
 	}
