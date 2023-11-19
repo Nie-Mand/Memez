@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Memez</title>
+  </head>
+  <body
+    class="bg-gradient-to-r via-blue-900 from-indigo-900 to-yellow-900 grid place-content-center h-screen p-10"
+  >
+    <div class="bg-white shadow-xl p-10 rounded-xl">
+      <h1 class="font-black text-indigo-700 text-4xl">Memez</h1>
+      <h2 class="italic font-semibold">The Memes Rater</h2>
+      <form action="" class="py-4">
+        {{ if .Rate }}
+        <div
+          class="border-indigo-500 rounded-md border-2 p-3 text-center text-indigo-500 font-extrabold text-xl pb-4"
+        >
+          LOL
+        </div>
+        {{ end }}
+
+        <textarea
+          class="border rounded-md resize-none w-full outline-none p-2 focus:ring-2 focus:ring-indigo-600 duration-500 focus:duration-500"
+          name="meme"
+          placeholder="Knock knock..."
+          cols="40"
+          rows="6"
+        ></textarea>
+
+        <div class="flex justify-end pt-4">
+          <button
+            class="px-3 py-2 rounded-md text-white bg-indigo-600 hover:bg-indigo-400 duration-500"
+          >
+            Rate Me
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
