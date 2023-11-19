@@ -5,6 +5,8 @@ import (
 	"insat/devops/core/config"
 	"insat/devops/core/store"
 	"insat/devops/core/store/services"
+	"insat/devops/pkg/rating"
+	"insat/devops/pkg/repositories"
 
 	"github.com/labstack/echo/v4"
 )
@@ -18,7 +20,12 @@ func main() {
 	e := echo.New()
 	config.InjectRenderer(e)
 
-	var memezHandler store.APIServer = services.NewMemesHandler()
+	repository := repositories.NewMemesIndexer()
+	rater := rating.NewAIBasedRatingService()
+
+	memesService := services.NewMemesService(repository, rater)
+
+	var memezHandler store.APIServer = services.NewMemesHandler(memesService)
 
 	e.GET("/", memezHandler.ShowIndex)
 	e.POST("/", memezHandler.UploadAndRate)

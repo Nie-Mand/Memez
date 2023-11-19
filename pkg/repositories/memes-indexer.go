@@ -1,6 +1,9 @@
 package repositories
 
-import "insat/devops/core/store"
+import (
+	"insat/devops/core/store"
+	"log"
+)
 
 type MemesIndexer struct {}
 
@@ -8,6 +11,7 @@ func NewMemesIndexer() *MemesIndexer {
 	return &MemesIndexer{}
 }
 
-func (MemesIndexer) Index(m *store.Meme) error {
+func (MemesIndexer) Save(m *store.Meme) error {
+	log.Println("[*] Indexing the meme...")
 	return nil
 }

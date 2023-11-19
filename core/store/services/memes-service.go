@@ -2,12 +2,31 @@ package services
 
 import "insat/devops/core/store"
 
-type MemesService struct {}
-
-func NewMemesService() *MemesService {
-	return &MemesService{}
+type MemesService struct {
+	store.MemesRepository
+	store.MemesRatingService
 }
 
-func (MemesService) UploadAndRate(m *store.Meme) error {
+func NewMemesService(
+	memesRepository store.MemesRepository,
+	memesRatingService store.MemesRatingService,
+) *MemesService {
+	return &MemesService{
+		MemesRepository:   memesRepository,
+		MemesRatingService: memesRatingService,
+	}
+}
+
+func (svc *MemesService) UploadAndRate(m *store.Meme) error {
+	err := svc.MemesRepository.Save(m)
+	if err != nil {
+		return err
+	}
+
+	err = svc.MemesRatingService.Rate(m)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
