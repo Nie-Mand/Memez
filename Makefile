@@ -10,10 +10,15 @@ dev: server
 
 test: 
 	@mkdir -p out
-	@go test -v -cover -coverprofile=out/coverage.out ./... 
+	@go test -v --tags=integration,unit -cover -coverprofile=out/coverage.out ./... 
 
-coverage:
-	@mkdir -p out
-	@go tool cover -html=coverage.out -o out/coverage.html
+test-unit: 
+	@go test -v --tags=unit -cover ./...
 
-.PHONY: server init dev test coverage
+test-integration:
+	@go test -v --tags=integration -cover ./...
+
+coverage: test
+	@go tool cover -html=out/coverage.out -o out/coverage.html
+
+.PHONY: server init dev test coverage test-unit test-integration
