@@ -21,4 +21,16 @@ test-integration:
 coverage: test
 	@go tool cover -html=out/coverage.out -o out/coverage.html
 
-.PHONY: server init dev test coverage test-unit test-integration
+test-load:
+	@mkdir -p out
+	@k6 run -e BASE_URL=http://localhost:1323 --out json=out/load.json ./tests/load/load-test.js
+
+test-stress:
+	@mkdir -p out
+	@k6 run -e BASE_URL=http://localhost:1323 --out json=out/stress.json ./tests/load/stress-test.js
+
+test-spike:
+	@mkdir -p out
+	@k6 run -e BASE_URL=http://localhost:1323 --out json=out/spike.json ./tests/load/spike-test.js
+
+.PHONY: server init dev test coverage test-unit test-integration test-load test-stress test-spike
