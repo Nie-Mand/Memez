@@ -9,7 +9,8 @@ server: init
 dev: server
 
 test: 
-	@go test -v -cover -coverprofile=coverage.out ./... 
+	@mkdir -p out
+	@go test -v -cover -coverprofile=out/coverage.out ./... 
 
 coverage:
 	@mkdir -p out
