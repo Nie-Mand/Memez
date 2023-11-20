@@ -2,3 +2,5 @@ venv
 bin
 out
 tmp
+.scannerwork
+build

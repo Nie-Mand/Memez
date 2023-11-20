@@ -10,16 +10,19 @@ dev: server
 
 test: 
 	@mkdir -p out
-	@go test -v --tags=integration,unit -cover -coverprofile=out/coverage.out ./... 
+	@go test -v --tags=integration,unit -cover -coverprofile=out/coverage.out ./... -json > out/test-report.out
 
 test-unit: 
-	@go test -v --tags=unit -cover ./...
+	@go test -v --tags=unit -cover ./... -json > out/test-report.out
 
 test-integration:
-	@go test -v --tags=integration -cover ./...
+	@go test -v --tags=integration -cover ./... -json > out/test-report.out
 
 coverage: test
 	@go tool cover -html=out/coverage.out -o out/coverage.html
+
+vet:
+	@go vet -json ./... > out/vet.out
 
 test-load:
 	@mkdir -p out
@@ -33,4 +36,10 @@ test-spike:
 	@mkdir -p out
 	@k6 run -e BASE_URL=http://localhost:1323 --out json=out/spike.json ./tests/load/spike-test.js
 
-.PHONY: server init dev test coverage test-unit test-integration test-load test-stress test-spike
+build:
+	@mkdir -p build
+	@go build -o build/server cmd/main.go
+	@cp -r ./templates ./build/templates
+	@cp -r ./hack ./build/hack
+
+.PHONY: server init dev test coverage test-unit test-integration test-load test-stress test-spike vet
