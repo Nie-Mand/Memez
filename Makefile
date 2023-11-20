@@ -8,4 +8,11 @@ server: init
 
 dev: server
 
-.PHONY: server init dev
+test: 
+	@go test -v -cover -coverprofile=coverage.out ./... 
+
+coverage:
+	@mkdir -p out
+	@go tool cover -html=coverage.out -o out/coverage.html
+
+.PHONY: server init dev test coverage
