@@ -12,6 +12,10 @@ test:
 	@mkdir -p out
 	@go test -v --tags=integration,unit -cover -coverprofile=out/coverage.out ./... -json > out/test-report.out
 
+test-local: 
+	@mkdir -p out
+	@go test -v --tags=integration,unit -cover -coverprofile=out/coverage.out ./... 
+
 test-unit: 
 	@go test -v --tags=unit -cover ./... -json > out/test-report.out
 
@@ -42,4 +46,4 @@ build:
 	@cp -r ./templates ./build/templates
 	@cp -r ./hack ./build/hack
 
-.PHONY: server init dev test coverage test-unit test-integration test-load test-stress test-spike vet
+.PHONY: server init dev test coverage test-unit test-integration test-load test-stress test-spike vet test-local
