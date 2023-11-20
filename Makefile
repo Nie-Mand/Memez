@@ -18,7 +18,7 @@ test-unit:
 test-integration:
 	@go test -v --tags=integration -cover ./... -json > out/test-report.out
 
-coverage: test
+coverage:
 	@go tool cover -html=out/coverage.out -o out/coverage.html
 
 vet:
